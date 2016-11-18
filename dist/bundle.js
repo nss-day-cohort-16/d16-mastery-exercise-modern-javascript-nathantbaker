@@ -44,10 +44,10 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict'; // 'strict-loader' handles the other modules
+	'use strict';
 
 	// Requires
-	__webpack_require__(1),
+	__webpack_require__(1);
 	__webpack_require__(5);
 	__webpack_require__(7);
 
@@ -403,8 +403,7 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
+	'use strict'; /* jshint -W097 */
 	console.log("model.js loads");
 
 	// Requires
@@ -416,7 +415,6 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
 	console.log("view.js loads");
 
 	// Requires

@@ -1,6 +1,6 @@
-'use strict'; // 'strict-loader' handles the other modules
+'use strict';
 
 // Requires
-require("../css/style.css"),
-require("strict!./model.js");
+require("../css/style.css");
+require("./model.js");
 require('jquery');
