@@ -1,3 +1,16 @@
+## Notes about Webpack
+
+ Here are some notes about using Webpack if you'd like to work on this app locally.
+
+1. Navigate to the `app` folder and run `npm install`.
+1. While still in `app`,  run `webpack --watch` to watch for changes and compile the `bundle.js` output file.
+1. Step out of the app folder `../` and run `webpack-dev-server --output-public-path=/app/`
+1. View your app at [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/)
+
+The Webpack Dev Server automatically watches for changes and live-reloads changes to this app's files.
+
+Below are the requirements for a mastery exercise from Nashville Software School.
+
 # Modern JavaScript Developer Quiz
 # Robot Battledome
 
