@@ -3,4 +3,4 @@
 // Requires
 require('jquery');
 
-$("#container").html("hello world");
+$("#inject").html("hello world");

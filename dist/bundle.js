@@ -83,10 +83,10 @@
 
 	exports = module.exports = __webpack_require__(3)();
 	// imports
-
+	exports.push([module.id, "@import url(/node_modules/bootstrap/dist/css/bootstrap.min.css);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  background: #ccc; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #ccc; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n", ""]);
 
 	// exports
 
@@ -407,6 +407,10 @@
 
 	// Requires
 	__webpack_require__(6);
+	let Robot = __webpack_require__(107);
+
+	let phrase = Robot.phrase();
+	$("#inject").html(phrase);
 
 
 
@@ -419,7 +423,7 @@
 	// Requires
 	__webpack_require__(7);
 
-	$("#container").html("hello world");
+	$("#inject").html("hello world");
 
 /***/ },
 /* 7 */
@@ -12002,6 +12006,29 @@
 
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
+
+/***/ },
+/* 107 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	// Requires
+	__webpack_require__(7);
+
+	// Robot function
+	let Robot = {
+	  type: "standard",
+	  weapon: "saw",
+	  phrase() {
+	    return `${this.type} robot with a ${this.weapon}`;
+	  }
+	};
+	// a ---> Object.prototype ---> null
+
+	// var robotType = Object.create(Robot);
+
+	module.exports = Robot;
 
 /***/ }
 /******/ ]);
