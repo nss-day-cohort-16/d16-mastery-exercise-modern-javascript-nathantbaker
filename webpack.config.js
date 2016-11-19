@@ -24,7 +24,4 @@ module.exports = {
       'jquery': '../node_modules/jquery/src/jquery.js'
     }
   },
-  jshint: {
-    strict: "global"
-  }
 };

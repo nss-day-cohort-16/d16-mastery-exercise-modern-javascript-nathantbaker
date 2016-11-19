@@ -1,8 +1,7 @@
 'use strict';
 
 // Requires
-require("./view");
-let Bot = require("./bots");
+let Display = require("./view");
+let Type = require("./botModels");
 
-let test = Bot.WaterBot.description();
-$("#inject").html(test);
+Display(Type.BoatBot);

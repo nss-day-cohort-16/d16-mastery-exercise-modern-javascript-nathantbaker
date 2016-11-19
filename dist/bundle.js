@@ -50,6 +50,7 @@
 	__webpack_require__(1);
 	__webpack_require__(5);
 
+	Display(Type.BoatBot);
 
 /***/ },
 /* 1 */
@@ -406,12 +407,10 @@
 	'use strict';
 
 	// Requires
-	__webpack_require__(6);
-	let Bot = __webpack_require__(107);
+	let Display = __webpack_require__(6);
+	let Type = __webpack_require__(107);
 
-	let test = Bot.WaterBot.description();
-	$("#inject").html(test);
-
+	Display(Type.BoatBot);
 
 /***/ },
 /* 6 */
@@ -422,7 +421,11 @@
 	// Requires
 	__webpack_require__(7);
 
-	$("#inject").html("hello world");
+	let displayFunction = function (bot1, bot2) {
+	  $("#inject").html(bot1.description());
+	};
+
+	module.exports = displayFunction;
 
 /***/ },
 /* 7 */
@@ -12011,11 +12014,30 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	let Bot = __webpack_require__(108); // {WaterBot, FlyingBot, GroundBot}
+
+	// Bot Model 1
+	let SubBot = Object.create(Bot.WaterBot);
+	SubBot.name = "Submarine Sam";
+	SubBot.weapon = "torpedos";
+
+	// Bot Model 1
+	let BoatBot = Object.create(Bot.WaterBot);
+	BoatBot.name = "Boaty McBoatface";
+	BoatBot.weapon = "waterproof grenades";
+
+	module.exports = {SubBot, BoatBot};
+
+/***/ },
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 
 	// Requires
 	__webpack_require__(7);
 
-	// Robot prototype
+	// Bot Prototype
 	let Robot = {
 	  name: "Mr. Roboto",
 	  weapon: "saw",
@@ -12025,19 +12047,17 @@
 	  }
 	};
 
-	// Robot Type 1
+	// Bot Type 1
 	let WaterBot = Object.create(Robot);
 	WaterBot.terrain = "water";
 
-	// Robot Type 2
+	// Bot Type 2
 	let FlyingBot = Object.create(Robot);
 	FlyingBot.terrain = "flying";
 
-	// Robot Type 3
+	// Bot Type 3
 	let GroundBot = Object.create(Robot);
 	GroundBot.terrain = "ground";
-
-	console.log("WaterBot:", WaterBot);
 
 	module.exports = {WaterBot, FlyingBot, GroundBot};
 
