@@ -1,13 +1,8 @@
-const path = require('path');
 
 module.exports = {
-  entry: "./app/js/controller.js",
+  entry: "./js/controller.js",
   output: {
-    path: './dist',
-    filename: 'bundle.js'
-  },
-    resolveLoader: {
-      root: path.resolve(__dirname, 'app/node_modules')
+    filename: './dist/bundle.js'
   },
   module: {
     preLoaders:[
@@ -18,8 +13,9 @@ module.exports = {
       }
     ],
     loaders: [
-      { test: /\.css$/,
-        loader: 'style!css'
+      {
+        test: /\.scss$/,
+        loaders: ["style", "css", "sass"]
       }
     ]
   },
