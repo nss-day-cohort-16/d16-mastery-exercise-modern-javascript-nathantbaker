@@ -2,8 +2,7 @@
 
 // Requires
 require("./view");
-let Robot = require("./robot");
+let Bot = require("./bots");
 
-let phrase = Robot.phrase();
-$("#inject").html(phrase);
-
+let test = Bot.WaterBot.description();
+$("#inject").html(test);

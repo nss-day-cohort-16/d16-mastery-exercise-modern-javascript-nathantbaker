@@ -407,11 +407,10 @@
 
 	// Requires
 	__webpack_require__(6);
-	let Robot = __webpack_require__(107);
+	let Bot = __webpack_require__(107);
 
-	let phrase = Robot.phrase();
-	$("#inject").html(phrase);
-
+	let test = Bot.WaterBot.description();
+	$("#inject").html(test);
 
 
 /***/ },
@@ -12016,19 +12015,31 @@
 	// Requires
 	__webpack_require__(7);
 
-	// Robot function
+	// Robot prototype
 	let Robot = {
-	  type: "standard",
+	  name: "Mr. Roboto",
 	  weapon: "saw",
-	  phrase() {
-	    return `${this.type} robot with a ${this.weapon}`;
+	  terrain: "unknown",
+	  description() {
+	    return `${this.terrain} bot named ${this.name}`;
 	  }
 	};
-	// a ---> Object.prototype ---> null
 
-	// var robotType = Object.create(Robot);
+	// Robot Type 1
+	let WaterBot = Object.create(Robot);
+	WaterBot.terrain = "water";
 
-	module.exports = Robot;
+	// Robot Type 2
+	let FlyingBot = Object.create(Robot);
+	FlyingBot.terrain = "flying";
+
+	// Robot Type 3
+	let GroundBot = Object.create(Robot);
+	GroundBot.terrain = "ground";
+
+	console.log("WaterBot:", WaterBot);
+
+	module.exports = {WaterBot, FlyingBot, GroundBot};
 
 /***/ }
 /******/ ]);
