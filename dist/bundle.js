@@ -60,12 +60,15 @@
 
 	// Event Listeners for Text Fields and Select Menus
 
-	let name1   = $("#name1"),
+	let inputs  = $("#inputs"),
+	    name1   = $("#name1"),
 	    name2   = $("#name2"),
 	    select1 = $("#select1"),
 	    select2 = $("#select2"),
 	    fight   = $("#fight"),
-	    attack  = $("#attack");
+	    attack  = $("#attack"),
+	    reset  = $("#reset");
+
 
 	name1.keyup( () => {
 	  userInputs.name1 = name1.val();
@@ -92,7 +95,7 @@
 	  let array = Object.values(userInputs);
 	  for (let i = 0; i < array.length; i++) {
 	    if (array[i] === null) {
-	      alert("Sorry, please set a name and bot type for both bots first.");
+	      alert("Please set a name and bot type for both bots first.");
 	      break;
 	    } else {
 	      beginFight();
@@ -102,7 +105,13 @@
 	});
 
 	let beginFight = () => {
-	  fight.html("Attack").attr("id", "attack"); // give button new text an different id.
+	  fight.html("Attack").attr("id", "attack"); // give button new text and different id.
+	  inputs.toggleClass("hide"); // hide input fields
+	  reset.toggleClass("hide");  // add reset button to refresh page
+	  console.log("toggle hide class");
+	  // call fight logic from model
+	  // hide inputs
+	  // add small new fight button
 	};
 
 /***/ },
@@ -140,7 +149,7 @@
 	exports.push([module.id, "@import url(/node_modules/bootstrap/dist/css/bootstrap.min.css);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  background: #ccc; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn {\n  width: 100%; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #ccc; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.hide {\n  visibility: none; }\n", ""]);
 
 	// exports
 

@@ -14,12 +14,15 @@ let userInputs = {
 
 // Event Listeners for Text Fields and Select Menus
 
-let name1   = $("#name1"),
+let inputs  = $("#inputs"),
+    name1   = $("#name1"),
     name2   = $("#name2"),
     select1 = $("#select1"),
     select2 = $("#select2"),
     fight   = $("#fight"),
-    attack  = $("#attack");
+    attack  = $("#attack"),
+    reset  = $("#reset");
+
 
 name1.keyup( () => {
   userInputs.name1 = name1.val();
@@ -46,7 +49,7 @@ fight.click( () => {
   let array = Object.values(userInputs);
   for (let i = 0; i < array.length; i++) {
     if (array[i] === null) {
-      alert("Sorry, please set a name and bot type for both bots first.");
+      alert("Please set a name and bot type for both bots first.");
       break;
     } else {
       beginFight();
@@ -56,5 +59,11 @@ fight.click( () => {
 });
 
 let beginFight = () => {
-  fight.html("Attack").attr("id", "attack"); // give button new text an different id.
+  fight.html("Attack").attr("id", "attack"); // give button new text and different id.
+  inputs.toggleClass("hide"); // hide input fields
+  reset.toggleClass("hide");  // add reset button to refresh page
+  console.log("toggle hide class");
+  // call fight logic from model
+  // hide inputs
+  // add small new fight button
 };
