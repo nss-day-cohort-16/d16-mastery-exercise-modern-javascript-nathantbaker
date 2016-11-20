@@ -1,8 +1,11 @@
 'use strict';
 
 // Requires
-let Display = require("./view");
-let Type = require("./botModels");
-//{SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
+let Display = require("./view"),
+    BotName = require("./botModels");
+    // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
-Display(Type.CarBot);
+let health = BotName.SubBot.getHealth();
+let damage = BotName.SubBot.getDamage();
+let description = BotName.SubBot.getDescription();
+Display(`A ${description} has a health of ${health} and deals ${damage} damage.`);

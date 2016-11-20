@@ -1,9 +1,11 @@
 {
   "strict": "global",
   "esversion": 6,
+  "expr": true,
   "globals": {
     "Display": true,
     "Type": true,
-    "$": true
+    "$": true,
+    "console": true
   }
 }

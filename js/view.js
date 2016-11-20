@@ -3,8 +3,8 @@
 // Requires
 require('jquery');
 
-let displayFunction = function (bot1, bot2) {
-  $("#inject").html(bot1.description());
+let displayFunction = function (string) {
+  $("#inject").html(string);
 };
 
 module.exports = displayFunction;

@@ -50,8 +50,6 @@
 	__webpack_require__(1);
 	__webpack_require__(5);
 
-	Display(Type.BoatBot);
-
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -407,11 +405,14 @@
 	'use strict';
 
 	// Requires
-	let Display = __webpack_require__(6);
-	let Type = __webpack_require__(107);
-	//{SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
+	let Display = __webpack_require__(6),
+	    BotName = __webpack_require__(107);
+	    // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
-	Display(Type.CarBot);
+	let health = BotName.SubBot.getHealth();
+	let damage = BotName.SubBot.getDamage();
+	let description = BotName.SubBot.getDescription();
+	Display(`A ${description} has a health of ${health} and deals ${damage} damage.`);
 
 /***/ },
 /* 6 */
@@ -422,8 +423,8 @@
 	// Requires
 	__webpack_require__(7);
 
-	let displayFunction = function (bot1, bot2) {
-	  $("#inject").html(bot1.description());
+	let displayFunction = function (string) {
+	  $("#inject").html(string);
 	};
 
 	module.exports = displayFunction;
@@ -12021,31 +12022,43 @@
 	let SubBot = Object.create(Bot.WaterBot);
 	SubBot.name = "Submarine Sam";
 	SubBot.weapon = "torpedos";
+	SubBot.modHealth = 4;
+	SubBot.modDamage = 2;
 
 	// Bot Model 2
 	let BoatBot = Object.create(Bot.WaterBot);
 	BoatBot.name = "Boaty McBoatface";
 	BoatBot.weapon = "waterproof grenades";
+	BoatBot.modHealth = 6;
+	BoatBot.modDamage = 3;
 
 	// Bot Model 3
 	let SquirrelBot = Object.create(Bot.FlyingBot);
 	SquirrelBot.name = "SquirrelBot";
 	SquirrelBot.weapon = "nuts";
+	SquirrelBot.modHealth = 8;
+	SquirrelBot.modDamage = 4;
 
 	// Bot Model 4
 	let BigBirdBot = Object.create(Bot.FlyingBot);
 	BigBirdBot.name = "BigBirdBot";
 	BigBirdBot.weapon = "sonic waves";
+	BigBirdBot.modHealth = 12;
+	BigBirdBot.modDamage = 6;
 
 	// Bot Model 5
 	let TankBot = Object.create(Bot.GroundBot);
 	TankBot.name = "TankBot";
 	TankBot.weapon = "mega bullets";
+	TankBot.modHealth = 10;
+	TankBot.modDamage = 5;
 
 	// Bot Model 6
 	let CarBot = Object.create(Bot.GroundBot);
 	CarBot.name = "CarBot";
 	CarBot.weapon = "flames";
+	CarBot.modHealth = 2;
+	CarBot.modDamage = 1;
 
 	module.exports = {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
@@ -12060,25 +12073,38 @@
 
 	// Bot Prototype
 	let Robot = {
+
+	  // Default Stats
 	  name: "Mr. Roboto",
-	  weapon: "saw",
+	  weapon: "robot fists",
 	  terrain: "unknown",
-	  description() {
+	  healthRange: [15, 30], // base health range
+	  damageRange: [5, 10], //  base damage range
+	  modHealth: 0,
+	  modDamage: 0,
+
+	  // Methods
+	  getDescription() {
 	    return `${this.terrain} bot named ${this.name}`;
+	  },
+	  getHealth() {
+	    let start = this.healthRange[0] += this.modHealth;   // Increase min/max heatlh
+	    let end   = this.healthRange[1] += this.modHealth;  //  by model's modifers
+	    // Return a random integer between new health range
+	    return Math.ceil(Math.random()*(end-start+1))+(start-1);
+	  },
+	  getDamage(num) {
+	    let start = this.damageRange[0] += this.modDamage;   // Increase min/max damage
+	    let end   = this.damageRange[1] += this.modDamage;  //  by model's modifers
+	    // Return a random integer between new damage range
+	    return Math.ceil(Math.random()*(end-start+1))+(start-1);
 	  }
 	};
 
-	// Bot Type 1
-	let WaterBot = Object.create(Robot);
-	WaterBot.terrain = "water";
-
-	// Bot Type 2
-	let FlyingBot = Object.create(Robot);
-	FlyingBot.terrain = "flying";
-
-	// Bot Type 3
-	let GroundBot = Object.create(Robot);
-	GroundBot.terrain = "ground";
+	// Create 3 types of bots with unique terrain
+	let WaterBot  = Object.create(Robot); WaterBot.terrain  = "water";
+	let FlyingBot = Object.create(Robot); FlyingBot.terrain = "flying";
+	let GroundBot = Object.create(Robot); GroundBot.terrain = "ground";
 
 	module.exports = {WaterBot, FlyingBot, GroundBot};
 
