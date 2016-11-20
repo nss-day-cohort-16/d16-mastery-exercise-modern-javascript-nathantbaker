@@ -5,19 +5,32 @@ let Render = require("./view"),
     BotName = require("./botModels");
     // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
+let attack = $("#attack");
+
 let fightLogic = function (userInputs) {
   let Bots = createBots(userInputs); // create bots based on inputs
   Render.startFight(Bots);           // draw inital stats
-  $("#attack").click( () => {        // on click update health
-
+  attack.click( () => {        // on click, update health
     // Set new healths
     Bots._1.health -= Bots._2.getDamage();
     Bots._2.health -= Bots._1.getDamage();
+    // force anything less than 0 to 0.
+    if (Bots._1.health < 0) { Bots._1.health = 0; }
+    if (Bots._2.health < 0) { Bots._2.health = 0; }
+    // Render updated health
     Render.setHealth(Bots._1.health, Bots._2.health);
-    Render.setStatus(`Oh snap! ${Bots._1.name} dealth ${Bots._1.damage} damage and ${Bots._2.name} dealth ${Bots._2.damage} damage.`);
-
-    // Set new health for Bot 2
-    console.log("you clicked attack");
+    // Declare the winner if there is one
+    if (Bots._1.health === 0 || Bots._2.health === 0) {
+      attack.toggleClass("hide");
+      if (Bots._1.health === 0 && Bots._2.health === 0) {
+        Render.setStatus(`<h2 class="winner">Everyone died :(</h2>`);
+      } else if (Bots._1.health === 0) {
+        Render.setStatus(`<h2 class="winner">The ${Bots._2.model} defeated the ${Bots._1.model} with its ${Bots._2.weapon}!</h2>`);
+      } else if (Bots._2.health === 0) {
+        Render.setStatus(`<h2 class="winner">The ${Bots._1.model} defeated the ${Bots._2.model} with its ${Bots._1.weapon}!</h2>`);      }
+    } else {
+      Render.setStatus(`Oh snap! ${Bots._1.name} has dealt ${Bots._1.damage} damage and ${Bots._2.name} has dealt ${Bots._2.damage} damage.`);
+    }
   });
 };
 

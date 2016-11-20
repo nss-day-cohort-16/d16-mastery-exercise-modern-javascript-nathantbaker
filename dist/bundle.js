@@ -143,7 +143,7 @@
 	exports.push([module.id, "@import url(/node_modules/bootstrap/dist/css/bootstrap.min.css);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  background: #ccc; }\n\nh2 {\n  font-size: 1.5em; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.health {\n  color: green; }\n\n.hide {\n  visibility: none; }\n\n#status {\n  color: grey;\n  font-size: 1em; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #ccc; }\n\nh2 {\n  font-size: 1.5em; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.health {\n  color: green; }\n\n.hide {\n  visibility: none; }\n\n.winner {\n  color: red; }\n\n#status {\n  color: grey;\n  font-size: 1em; }\n", ""]);
 
 	// exports
 
@@ -467,19 +467,32 @@
 	    BotName = __webpack_require__(107);
 	    // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
+	let attack = $("#attack");
+
 	let fightLogic = function (userInputs) {
 	  let Bots = createBots(userInputs); // create bots based on inputs
 	  Render.startFight(Bots);           // draw inital stats
-	  $("#attack").click( () => {        // on click update health
-
+	  attack.click( () => {        // on click, update health
 	    // Set new healths
 	    Bots._1.health -= Bots._2.getDamage();
 	    Bots._2.health -= Bots._1.getDamage();
+	    // force anything less than 0 to 0.
+	    if (Bots._1.health < 0) { Bots._1.health = 0; }
+	    if (Bots._2.health < 0) { Bots._2.health = 0; }
+	    // Render updated health
 	    Render.setHealth(Bots._1.health, Bots._2.health);
-	    Render.setStatus(`Oh snap! ${Bots._1.name} dealth ${Bots._1.damage} damage and ${Bots._2.name} dealth ${Bots._2.damage} damage.`);
-
-	    // Set new health for Bot 2
-	    console.log("you clicked attack");
+	    // Declare the winner if there is one
+	    if (Bots._1.health === 0 || Bots._2.health === 0) {
+	      attack.toggleClass("hide");
+	      if (Bots._1.health === 0 && Bots._2.health === 0) {
+	        Render.setStatus(`<h2 class="winner">Everyone died :(</h2>`);
+	      } else if (Bots._1.health === 0) {
+	        Render.setStatus(`<h2 class="winner">The ${Bots._2.model} defeated the ${Bots._1.model} with its ${Bots._2.weapon}!</h2>`);
+	      } else if (Bots._2.health === 0) {
+	        Render.setStatus(`<h2 class="winner">The ${Bots._1.model} defeated the ${Bots._2.model} with its ${Bots._1.weapon}!</h2>`);      }
+	    } else {
+	      Render.setStatus(`Oh snap! ${Bots._1.name} has dealt ${Bots._1.damage} damage and ${Bots._2.name} has dealt ${Bots._2.damage} damage.`);
+	    }
 	  });
 	};
 
@@ -12170,7 +12183,7 @@
 	let BoatBot = Object.create(Bot.WaterBot);
 	BoatBot.model = "BoatBot";
 	BoatBot.weapon = "waterproof grenades";
-	BoatBot.modHealth = 6;
+	BoatBot.modHealth = 16;
 	BoatBot.modDamage = 3;
 
 	// Bot Model 3
@@ -12220,8 +12233,8 @@
 	  name: "Mr. Roboto",
 	  weapon: "robot fists",
 	  terrain: "unknown",
-	  healthRange: [15, 30], // base health range
-	  damageRange: [5, 10], //  base damage range
+	  healthRange: [15, 60], // base health range
+	  damageRange: [8, 12], //  base damage range
 	  health: 0,
 	  damage: 0,
 	  modHealth: 0,

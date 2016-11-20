@@ -12,7 +12,7 @@ SubBot.modDamage = 2;
 let BoatBot = Object.create(Bot.WaterBot);
 BoatBot.model = "BoatBot";
 BoatBot.weapon = "waterproof grenades";
-BoatBot.modHealth = 6;
+BoatBot.modHealth = 16;
 BoatBot.modDamage = 3;
 
 // Bot Model 3

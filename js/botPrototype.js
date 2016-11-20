@@ -11,8 +11,8 @@ let Robot = {
   name: "Mr. Roboto",
   weapon: "robot fists",
   terrain: "unknown",
-  healthRange: [15, 30], // base health range
-  damageRange: [5, 10], //  base damage range
+  healthRange: [15, 60], // base health range
+  damageRange: [8, 12], //  base damage range
   health: 0,
   damage: 0,
   modHealth: 0,
