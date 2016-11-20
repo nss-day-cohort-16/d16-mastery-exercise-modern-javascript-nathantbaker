@@ -50,6 +50,50 @@
 	__webpack_require__(1);
 	__webpack_require__(5);
 
+	// Object to collect user inputs
+	let userInputs = {
+	  name1: null,
+	  name2: null,
+	  bot1: null,
+	  bot2: null
+	};
+
+	// Event Listeners for Text Fields and Select Menus
+
+	let name1   = $("#name1"),
+	    name2   = $("#name2"),
+	    select1 = $("#select1"),
+	    select2 = $("#select2"),
+	    fight   = $("#fight");
+
+	name1.keyup( () => {
+	  userInputs.name1 = name1.val();
+	  console.log("userInputs.name1:", userInputs.name1);
+	});
+
+	name2.keyup( () => {
+	  userInputs.name2 = name2.val();
+	  console.log("userInputs.name2:", userInputs.name2);
+	});
+
+	select1.change(function() {
+	  userInputs.bot1 = $(this).val();
+	  console.log("userInputs.bot1", userInputs.bot1);
+	});
+
+	select2.change(function() {
+	  userInputs.bot2 = $(this).val();
+	  console.log("userInputs.bot2", userInputs.bot2);
+	});
+
+	// Form Validation
+	fight.click( () => {
+
+	});
+
+
+
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -85,7 +129,7 @@
 	exports.push([module.id, "@import url(/node_modules/bootstrap/dist/css/bootstrap.min.css);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  background: #ccc; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #ccc; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn {\n  width: 100%; }\n", ""]);
 
 	// exports
 
@@ -412,7 +456,7 @@
 	let health = BotName.SubBot.getHealth();
 	let damage = BotName.SubBot.getDamage();
 	let description = BotName.SubBot.getDescription();
-	Display(`A ${description} has a health of ${health} and deals ${damage} damage.`);
+	Display(`A ${description} has a health of ${health} and deals ${damage} damage.`, 1);
 
 /***/ },
 /* 6 */
@@ -423,8 +467,11 @@
 	// Requires
 	__webpack_require__(7);
 
-	let displayFunction = function (string) {
-	  $("#inject").html(string);
+	let displayFunction = function (string, botNum) {
+	  switch(botNum) {
+	    case 1: $("#bot1").html(string); break;
+	    case 2: $("#bot2").html(string); break;
+	  }
 	};
 
 	module.exports = displayFunction;
@@ -12020,42 +12067,42 @@
 
 	// Bot Model 1
 	let SubBot = Object.create(Bot.WaterBot);
-	SubBot.name = "Submarine Sam";
+	SubBot.modelId = 1;
 	SubBot.weapon = "torpedos";
 	SubBot.modHealth = 4;
 	SubBot.modDamage = 2;
 
 	// Bot Model 2
 	let BoatBot = Object.create(Bot.WaterBot);
-	BoatBot.name = "Boaty McBoatface";
+	BoatBot.modelId = 2;
 	BoatBot.weapon = "waterproof grenades";
 	BoatBot.modHealth = 6;
 	BoatBot.modDamage = 3;
 
 	// Bot Model 3
 	let SquirrelBot = Object.create(Bot.FlyingBot);
-	SquirrelBot.name = "SquirrelBot";
+	SquirrelBot.modelId = 3;
 	SquirrelBot.weapon = "nuts";
 	SquirrelBot.modHealth = 8;
 	SquirrelBot.modDamage = 4;
 
 	// Bot Model 4
 	let BigBirdBot = Object.create(Bot.FlyingBot);
-	BigBirdBot.name = "BigBirdBot";
+	BigBirdBot.modelId = 4;
 	BigBirdBot.weapon = "sonic waves";
 	BigBirdBot.modHealth = 12;
 	BigBirdBot.modDamage = 6;
 
 	// Bot Model 5
 	let TankBot = Object.create(Bot.GroundBot);
-	TankBot.name = "TankBot";
+	TankBot.modelId = 5;
 	TankBot.weapon = "mega bullets";
 	TankBot.modHealth = 10;
 	TankBot.modDamage = 5;
 
 	// Bot Model 6
 	let CarBot = Object.create(Bot.GroundBot);
-	CarBot.name = "CarBot";
+	CarBot.modelId = 6;
 	CarBot.weapon = "flames";
 	CarBot.modHealth = 2;
 	CarBot.modDamage = 1;
@@ -12075,6 +12122,7 @@
 	let Robot = {
 
 	  // Default Stats
+	  modelId: null,
 	  name: "Mr. Roboto",
 	  weapon: "robot fists",
 	  terrain: "unknown",
@@ -12093,7 +12141,7 @@
 	    // Return a random integer between new health range
 	    return Math.ceil(Math.random()*(end-start+1))+(start-1);
 	  },
-	  getDamage(num) {
+	  getDamage() {
 	    let start = this.damageRange[0] += this.modDamage;   // Increase min/max damage
 	    let end   = this.damageRange[1] += this.modDamage;  //  by model's modifers
 	    // Return a random integer between new damage range

@@ -3,42 +3,42 @@ let Bot = require("./botPrototype"); // {WaterBot, FlyingBot, GroundBot}
 
 // Bot Model 1
 let SubBot = Object.create(Bot.WaterBot);
-SubBot.name = "Submarine Sam";
+SubBot.modelId = 1;
 SubBot.weapon = "torpedos";
 SubBot.modHealth = 4;
 SubBot.modDamage = 2;
 
 // Bot Model 2
 let BoatBot = Object.create(Bot.WaterBot);
-BoatBot.name = "Boaty McBoatface";
+BoatBot.modelId = 2;
 BoatBot.weapon = "waterproof grenades";
 BoatBot.modHealth = 6;
 BoatBot.modDamage = 3;
 
 // Bot Model 3
 let SquirrelBot = Object.create(Bot.FlyingBot);
-SquirrelBot.name = "SquirrelBot";
+SquirrelBot.modelId = 3;
 SquirrelBot.weapon = "nuts";
 SquirrelBot.modHealth = 8;
 SquirrelBot.modDamage = 4;
 
 // Bot Model 4
 let BigBirdBot = Object.create(Bot.FlyingBot);
-BigBirdBot.name = "BigBirdBot";
+BigBirdBot.modelId = 4;
 BigBirdBot.weapon = "sonic waves";
 BigBirdBot.modHealth = 12;
 BigBirdBot.modDamage = 6;
 
 // Bot Model 5
 let TankBot = Object.create(Bot.GroundBot);
-TankBot.name = "TankBot";
+TankBot.modelId = 5;
 TankBot.weapon = "mega bullets";
 TankBot.modHealth = 10;
 TankBot.modDamage = 5;
 
 // Bot Model 6
 let CarBot = Object.create(Bot.GroundBot);
-CarBot.name = "CarBot";
+CarBot.modelId = 6;
 CarBot.weapon = "flames";
 CarBot.modHealth = 2;
 CarBot.modDamage = 1;

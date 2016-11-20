@@ -7,6 +7,7 @@ require('jquery');
 let Robot = {
 
   // Default Stats
+  modelId: null,
   name: "Mr. Roboto",
   weapon: "robot fists",
   terrain: "unknown",
@@ -25,7 +26,7 @@ let Robot = {
     // Return a random integer between new health range
     return Math.ceil(Math.random()*(end-start+1))+(start-1);
   },
-  getDamage(num) {
+  getDamage() {
     let start = this.damageRange[0] += this.modDamage;   // Increase min/max damage
     let end   = this.damageRange[1] += this.modDamage;  //  by model's modifers
     // Return a random integer between new damage range

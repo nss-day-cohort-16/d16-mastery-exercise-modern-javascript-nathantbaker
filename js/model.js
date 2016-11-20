@@ -8,4 +8,4 @@ let Display = require("./view"),
 let health = BotName.SubBot.getHealth();
 let damage = BotName.SubBot.getDamage();
 let description = BotName.SubBot.getDescription();
-Display(`A ${description} has a health of ${health} and deals ${damage} damage.`);
+Display(`A ${description} has a health of ${health} and deals ${damage} damage.`, 1);

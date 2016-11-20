@@ -1,13 +1,57 @@
 <html>
-    <head>
-        <title>Robot Battledome</title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-      <div class="container">
-        <h1>Robot Battledome</h1>
-        <div id="inject"></div>
+  <head>
+    <title>Robot Battledome</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <h1>Robot Battledome</h1>
+        </div>
       </div>
-      <script type="text/javascript" src="dist/bundle.js" charset="utf-8"></script>
-    </body>
+
+      <div class="row">
+         <div class="col-sm-6">
+            <input type="text" class="form-control" id="name1" placeholder="Give Bot 1 a Name">
+            <select class="form-control" id="select1">
+              <option>Select a Model for Bot 1</option>
+              <option value="1">SubBot</option>
+              <option value="2">BoatBot</option>
+              <option value="3">SquirrelBot</option>
+              <option value="4">BigBirdBot</option>
+              <option value="5">TankBot</option>
+              <option value="6">CarBot</option>
+            </select>
+         </div>
+         <div class="col-sm-6">
+            <input type="text" class="form-control" id="name2" placeholder="Give Bot 2 a Name">
+            <select class="form-control" id="select2">
+              <option>Select a Model for Bot 2</option>
+              <option value="1">SubBot</option>
+              <option value="2">BoatBot</option>
+              <option value="3">SquirrelBot</option>
+              <option value="4">BigBirdBot</option>
+              <option value="5">TankBot</option>
+              <option value="6">CarBot</option>
+            </select>
+         </div>
+      </div>
+
+      <div class="row text-center">
+         <div class="col-sm-12">
+           <button type="button" class="btn btn-danger" id="fight">Begin Fight</button>
+         </div>
+      </div>
+
+
+      <div class="row">
+         <div class="col-sm-6" id="bot1"></div>
+         <div class="col-sm-6" id="bot2"></div>
+      </div>
+
+    </div>
+    <script type="text/javascript" src="dist/bundle.js" charset="utf-8"></script>
+  </body>
 </html>
