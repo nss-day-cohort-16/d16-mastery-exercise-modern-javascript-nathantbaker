@@ -6,6 +6,8 @@
     "Type": true,
     "$": true,
     "console": true,
+    "alert": true,
+    "document": true,
     "alert": true
   }
 }

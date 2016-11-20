@@ -6,6 +6,10 @@ body {
     background: $background;
 }
 
+h2 {
+  font-size: 1.5em;
+}
+
 .container {
   background-color: #f4f3ed;
   border-radius: 0 0 10px 10px;
@@ -26,10 +30,10 @@ body {
   margin: 10px 0;
 }
 
-.hide {
-  visibility: none;
+.health {
+  color: green;
 }
 
-h2 {
-  font-size: 1.5em;
+.hide {
+  visibility: none;
 }

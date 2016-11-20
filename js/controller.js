@@ -2,7 +2,7 @@
 
 // Requires
 require("../sass/style.scss");
-let FightLogic = require("./model");
+let beginFight = require("./model");
 
 // Object to collect user inputs
 let userInputs = {
@@ -14,16 +14,11 @@ let userInputs = {
 
 // Event Listeners for Text Fields and Select Menus
 
-let inputs  = $("#inputs"),
-    name1   = $("#name1"),
+let name1   = $("#name1"),
     name2   = $("#name2"),
     select1 = $("#select1"),
     select2 = $("#select2"),
-    fight   = $("#fight"),
-    attack  = $("#attack"),
-    battle  = $("#battle"),
-    reset   = $("#reset");
-
+    beginButton  = $("#beginButton");
 
 name1.keyup( () => {
   userInputs.name1 = name1.val();
@@ -45,27 +40,24 @@ select2.change(function() {
   console.log("userInputs.bot2", userInputs.bot2);
 });
 
-// Form Validation
-fight.click( () => {
-  let array = Object.values(userInputs);
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === null) {
-      alert("Please set a name and bot type for both bots first.");
-      break;
-    } else {
-      beginFight();
-      break;
-    }
-  }
+// Listen for button click
+beginButton.click( () => {
+  validateForm();
 });
 
-let beginFight = () => {
-  fight.html("Attack").attr("id", "attack"); // give button new text and different id.
-  inputs.toggleClass("hide"); // hide input fields
-  reset.toggleClass("hide");  // add reset button to refresh page
-  battle.toggleClass("hide"); // show fight div
-  FightLogic(userInputs);
-  // call fight logic from model
-  // hide inputs
-  // add small new fight button
-};
+// Listen for enter key
+$(document).keypress(function(e) {
+    if(e.which == 13) {
+      validateForm();
+    }
+});
+
+// Form Validation
+ function validateForm() {
+  let array = Object.values(userInputs);
+    if (array[0] || array[1] || array[2] || array[3] !== null) {
+      beginFight(userInputs);
+    } else {
+      alert("Please set a name and bot type for both bots first.");
+    }
+}

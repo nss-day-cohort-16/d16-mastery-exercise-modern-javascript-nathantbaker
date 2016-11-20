@@ -48,7 +48,7 @@
 
 	// Requires
 	__webpack_require__(1);
-	let FightLogic = __webpack_require__(5);
+	let beginFight = __webpack_require__(5);
 
 	// Object to collect user inputs
 	let userInputs = {
@@ -60,16 +60,11 @@
 
 	// Event Listeners for Text Fields and Select Menus
 
-	let inputs  = $("#inputs"),
-	    name1   = $("#name1"),
+	let name1   = $("#name1"),
 	    name2   = $("#name2"),
 	    select1 = $("#select1"),
 	    select2 = $("#select2"),
-	    fight   = $("#fight"),
-	    attack  = $("#attack"),
-	    battle  = $("#battle"),
-	    reset   = $("#reset");
-
+	    beginButton  = $("#beginButton");
 
 	name1.keyup( () => {
 	  userInputs.name1 = name1.val();
@@ -91,30 +86,27 @@
 	  console.log("userInputs.bot2", userInputs.bot2);
 	});
 
-	// Form Validation
-	fight.click( () => {
-	  let array = Object.values(userInputs);
-	  for (let i = 0; i < array.length; i++) {
-	    if (array[i] === null) {
-	      alert("Please set a name and bot type for both bots first.");
-	      break;
-	    } else {
-	      beginFight();
-	      break;
-	    }
-	  }
+	// Listen for button click
+	beginButton.click( () => {
+	  validateForm();
 	});
 
-	let beginFight = () => {
-	  fight.html("Attack").attr("id", "attack"); // give button new text and different id.
-	  inputs.toggleClass("hide"); // hide input fields
-	  reset.toggleClass("hide");  // add reset button to refresh page
-	  battle.toggleClass("hide"); // show fight div
-	  FightLogic(userInputs);
-	  // call fight logic from model
-	  // hide inputs
-	  // add small new fight button
-	};
+	// Listen for enter key
+	$(document).keypress(function(e) {
+	    if(e.which == 13) {
+	      validateForm();
+	    }
+	});
+
+	// Form Validation
+	 function validateForm() {
+	  let array = Object.values(userInputs);
+	    if (array[0] || array[1] || array[2] || array[3] !== null) {
+	      beginFight(userInputs);
+	    } else {
+	      alert("Please set a name and bot type for both bots first.");
+	    }
+	}
 
 /***/ },
 /* 1 */
@@ -151,7 +143,7 @@
 	exports.push([module.id, "@import url(/node_modules/bootstrap/dist/css/bootstrap.min.css);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  background: #ccc; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.hide {\n  visibility: none; }\n\nh2 {\n  font-size: 1.5em; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #ccc; }\n\nh2 {\n  font-size: 1.5em; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.health {\n  color: green; }\n\n.hide {\n  visibility: none; }\n", ""]);
 
 	// exports
 
@@ -476,23 +468,20 @@
 	    // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
 	let FightLogic = function (userInputs) {
-	  let newBots = createBots(userInputs);
+	  let Bots = createBots(userInputs);
 	  console.log({
-	    Bot1: newBots.Bot1,
-	    Bot2: newBots.Bot2
+	    Bot1: Bots._1,
+	    Bot2: Bots._2
 	  });
-	  let label1 = newBots.Bot1.getDescription();
-	  let label2 = newBots.Bot2.getDescription();
-	  Render(`<h2>A ${label1}</h2>`, 1);
-	  Render(`<h2>A ${label2}</h2>`, 2);
+	  Render.startFight(Bots);
 	};
 
 	function createBots (userInputs) {  // name1, name2, bot1, bot2
-	  let Bot1 = Object.create(BotName[userInputs.bot1]);
-	  Bot1.name = userInputs.name1;
-	  let Bot2 = Object.create(BotName[userInputs.bot2]);
-	  Bot2.name = userInputs.name2;
-	  return {Bot1, Bot2};
+	  let _1 = Object.create(BotName[userInputs.bot1]);
+	  _1.name = userInputs.name1;
+	  let _2 = Object.create(BotName[userInputs.bot2]);
+	  _2.name = userInputs.name2;
+	  return {_1, _2};
 	}
 
 	module.exports = FightLogic;
@@ -506,14 +495,61 @@
 	// Requires
 	__webpack_require__(7);
 
-	let renderFunction = function (string, botNum) {
-	  switch(botNum) {
-	    case 1: $("#bot1").prepend(string); break;
-	    case 2: $("#bot2").prepend(string); break;
-	  }
+	let bot1El = $("#bot1"),
+	    bot2El = $("#bot2"),
+	    battle = $("#battle"),
+	    reset  = $("#reset"),
+	    inputs = $("#inputs"),
+	    beginButton = $("#beginButton"),
+	    attack = $("#attack");
+
+	let startFight = function (Bots) {
+	  beginButton.toggleClass("hide"); // hide begin fight button
+	  attack.toggleClass("hide"); // show fight button
+	  inputs.toggleClass("hide"); // hide input fields
+	  reset.toggleClass("hide");  // add reset button to refresh page
+	  battle.toggleClass("hide"); // show fight div
+
+	  // Get Random health based on bots' health ranges
+	  Bots._1.health = Bots._1.getHealth();
+	  Bots._2.health = Bots._2.getHealth();
+
+	  // Display Bot VS Bot Title
+	  $("#bot1-title").html(`<h2>A ${Bots._1.model} named ${Bots._1.name}<span class="pull-right">v.s.</span></h2>`);
+	  $("#bot2-title").html(`<h2>A ${Bots._2.model} named ${Bots._2.name}</h2>`);
+
+	  // Health
+	  $("#bot1-health").html(`<h2 class="health">Health: ${Bots._1.health}</h2>`);
+	  $("#bot2-health").html(`<h2 class="health">Health: ${Bots._2.health}</h2>`);
+
+	  // Display Bot Stats
+	  $("#bot1-stats").html(`
+	    <table class="table">
+	      <tr>
+	        <th>Terrain</th>
+	        <th>Weapon</th>
+	      </tr>
+	      <tr>
+	        <td>${Bots._1.terrain}</td>
+	        <td>${Bots._1.weapon}</td>
+	      </tr>
+	    </table>
+	    `);
+	  $("#bot2-stats").html(`
+	    <table class="table">
+	      <tr>
+	        <th>Terrain</th>
+	        <th>Weapon</th>
+	      </tr>
+	      <tr>
+	        <td>${Bots._2.terrain}</td>
+	        <td>${Bots._2.weapon}</td>
+	      </tr>
+	    </table>
+	    `);
 	};
 
-	module.exports = renderFunction;
+	module.exports = {startFight};
 
 /***/ },
 /* 7 */

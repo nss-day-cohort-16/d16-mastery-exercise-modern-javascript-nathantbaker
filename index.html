@@ -41,17 +41,40 @@
 
       <div class="row text-center">
          <div class="col-sm-12">
-           <button type="button" class="btn btn-danger" id="fight">Begin Fight</button>
+           <button type="button" class="btn btn-danger" id="beginButton">Begin Fight</button>
+           <button type="button" class="btn btn-danger hide" id="attack">Attack</button>
          </div>
       </div>
 
+      <div class="row">
+        <div id="status">
+          <div class="col-sm-12" id="status"></div>
+        </div>
+      </div>
 
       <div class="row hide" id="battle">
-         <div class="col-sm-5" id="bot1"></div>
-         <div class="col-sm-2 text-center">
-           <h2>VS</h2>
+         <div class="col-sm-6" id="bot1">
+            <div class="row">
+              <div class="col-sm-12" id="bot1-title"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" id="bot1-health"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" id="bot1-stats"></div>
+            </div>
          </div>
-         <div class="col-sm-5" id="bot2"></div>
+         <div class="col-sm-6" id="bot2">
+            <div class="row">
+              <div class="col-sm-12" id="bot2-title"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" id="bot2-health"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" id="bot2-stats"></div>
+            </div>
+         </div>
       </div>
 
     </div>
