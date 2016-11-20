@@ -18,7 +18,8 @@ let name1   = $("#name1"),
     name2   = $("#name2"),
     select1 = $("#select1"),
     select2 = $("#select2"),
-    fight   = $("#fight");
+    fight   = $("#fight"),
+    attack  = $("#attack");
 
 name1.keyup( () => {
   userInputs.name1 = name1.val();
@@ -42,7 +43,18 @@ select2.change(function() {
 
 // Form Validation
 fight.click( () => {
-
+  let array = Object.values(userInputs);
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === null) {
+      alert("Sorry, please set a name and bot type for both bots first.");
+      break;
+    } else {
+      beginFight();
+      break;
+    }
+  }
 });
 
-
+let beginFight = () => {
+  fight.html("Attack").attr("id", "attack"); // give button new text an different id.
+};
