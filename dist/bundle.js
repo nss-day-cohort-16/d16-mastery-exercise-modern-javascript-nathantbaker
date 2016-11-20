@@ -48,7 +48,7 @@
 
 	// Requires
 	__webpack_require__(1);
-	let beginFight = __webpack_require__(5);
+	let fightLogic = __webpack_require__(5);
 
 	// Object to collect user inputs
 	let userInputs = {
@@ -102,7 +102,7 @@
 	 function validateForm() {
 	  let array = Object.values(userInputs);
 	    if (array[0] || array[1] || array[2] || array[3] !== null) {
-	      beginFight(userInputs);
+	      fightLogic(userInputs);
 	    } else {
 	      alert("Please set a name and bot type for both bots first.");
 	    }
@@ -143,7 +143,7 @@
 	exports.push([module.id, "@import url(/node_modules/bootstrap/dist/css/bootstrap.min.css);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  background: #ccc; }\n\nh2 {\n  font-size: 1.5em; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.health {\n  color: green; }\n\n.hide {\n  visibility: none; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #ccc; }\n\nh2 {\n  font-size: 1.5em; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.health {\n  color: green; }\n\n.hide {\n  visibility: none; }\n\n#status {\n  color: grey;\n  font-size: 1em; }\n", ""]);
 
 	// exports
 
@@ -467,13 +467,20 @@
 	    BotName = __webpack_require__(107);
 	    // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
-	let FightLogic = function (userInputs) {
-	  let Bots = createBots(userInputs);
-	  console.log({
-	    Bot1: Bots._1,
-	    Bot2: Bots._2
+	let fightLogic = function (userInputs) {
+	  let Bots = createBots(userInputs); // create bots based on inputs
+	  Render.startFight(Bots);           // draw inital stats
+	  $("#attack").click( () => {        // on click update health
+
+	    // Set new healths
+	    Bots._1.health -= Bots._2.getDamage();
+	    Bots._2.health -= Bots._1.getDamage();
+	    Render.setHealth(Bots._1.health, Bots._2.health);
+	    Render.setStatus(`Oh snap! ${Bots._1.name} dealth ${Bots._1.damage} damage and ${Bots._2.name} dealth ${Bots._2.damage} damage.`);
+
+	    // Set new health for Bot 2
+	    console.log("you clicked attack");
 	  });
-	  Render.startFight(Bots);
 	};
 
 	function createBots (userInputs) {  // name1, name2, bot1, bot2
@@ -484,7 +491,7 @@
 	  return {_1, _2};
 	}
 
-	module.exports = FightLogic;
+	module.exports = fightLogic;
 
 /***/ },
 /* 6 */
@@ -501,7 +508,10 @@
 	    reset  = $("#reset"),
 	    inputs = $("#inputs"),
 	    beginButton = $("#beginButton"),
-	    attack = $("#attack");
+	    attack = $("#attack"),
+	    health1 = $("#bot1-health"),
+	    health2 = $("#bot2-health"),
+	    status = $("#status");
 
 	let startFight = function (Bots) {
 	  beginButton.toggleClass("hide"); // hide begin fight button
@@ -519,8 +529,8 @@
 	  $("#bot2-title").html(`<h2>A ${Bots._2.model} named ${Bots._2.name}</h2>`);
 
 	  // Health
-	  $("#bot1-health").html(`<h2 class="health">Health: ${Bots._1.health}</h2>`);
-	  $("#bot2-health").html(`<h2 class="health">Health: ${Bots._2.health}</h2>`);
+	  health1.html(`<h2 class="health">Health: ${Bots._1.health}</h2>`);
+	  health2.html(`<h2 class="health">Health: ${Bots._2.health}</h2>`);
 
 	  // Display Bot Stats
 	  $("#bot1-stats").html(`
@@ -549,7 +559,16 @@
 	    `);
 	};
 
-	module.exports = {startFight};
+	let setHealth = function (newHealth1, newHealth2) {
+	  health1.html(`<h2 class="health">Health: ${newHealth1}</h2>`);
+	  health2.html(`<h2 class="health">Health: ${newHealth2}</h2>`);
+	};
+
+	let setStatus = function (string) {
+	  status.html(`<h2 class="status">${string}</h2>`);
+	};
+
+	module.exports = {startFight, setHealth, setStatus};
 
 /***/ },
 /* 7 */
@@ -12203,6 +12222,8 @@
 	  terrain: "unknown",
 	  healthRange: [15, 30], // base health range
 	  damageRange: [5, 10], //  base damage range
+	  health: 0,
+	  damage: 0,
 	  modHealth: 0,
 	  modDamage: 0,
 
@@ -12214,13 +12235,17 @@
 	    let start = this.healthRange[0] += this.modHealth;   // Increase min/max heatlh
 	    let end   = this.healthRange[1] += this.modHealth;  //  by model's modifers
 	    // Return a random integer between new health range
-	    return Math.ceil(Math.random()*(end-start+1))+(start-1);
+	    let newHealth = Math.ceil(Math.random()*(end-start+1))+(start-1);
+	    this.health = newHealth; // store current health
+	    return newHealth;
 	  },
 	  getDamage() {
 	    let start = this.damageRange[0] += this.modDamage;   // Increase min/max damage
 	    let end   = this.damageRange[1] += this.modDamage;  //  by model's modifers
 	    // Return a random integer between new damage range
-	    return Math.ceil(Math.random()*(end-start+1))+(start-1);
+	    let newDamage = Math.ceil(Math.random()*(end-start+1))+(start-1);
+	    this.damage = newDamage; // store current damage
+	    return newDamage;
 	  }
 	};
 

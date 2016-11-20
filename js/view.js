@@ -9,7 +9,10 @@ let bot1El = $("#bot1"),
     reset  = $("#reset"),
     inputs = $("#inputs"),
     beginButton = $("#beginButton"),
-    attack = $("#attack");
+    attack = $("#attack"),
+    health1 = $("#bot1-health"),
+    health2 = $("#bot2-health"),
+    status = $("#status");
 
 let startFight = function (Bots) {
   beginButton.toggleClass("hide"); // hide begin fight button
@@ -27,8 +30,8 @@ let startFight = function (Bots) {
   $("#bot2-title").html(`<h2>A ${Bots._2.model} named ${Bots._2.name}</h2>`);
 
   // Health
-  $("#bot1-health").html(`<h2 class="health">Health: ${Bots._1.health}</h2>`);
-  $("#bot2-health").html(`<h2 class="health">Health: ${Bots._2.health}</h2>`);
+  health1.html(`<h2 class="health">Health: ${Bots._1.health}</h2>`);
+  health2.html(`<h2 class="health">Health: ${Bots._2.health}</h2>`);
 
   // Display Bot Stats
   $("#bot1-stats").html(`
@@ -57,4 +60,13 @@ let startFight = function (Bots) {
     `);
 };
 
-module.exports = {startFight};
+let setHealth = function (newHealth1, newHealth2) {
+  health1.html(`<h2 class="health">Health: ${newHealth1}</h2>`);
+  health2.html(`<h2 class="health">Health: ${newHealth2}</h2>`);
+};
+
+let setStatus = function (string) {
+  status.html(`<h2 class="status">${string}</h2>`);
+};
+
+module.exports = {startFight, setHealth, setStatus};

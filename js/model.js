@@ -5,13 +5,20 @@ let Render = require("./view"),
     BotName = require("./botModels");
     // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
-let FightLogic = function (userInputs) {
-  let Bots = createBots(userInputs);
-  console.log({
-    Bot1: Bots._1,
-    Bot2: Bots._2
+let fightLogic = function (userInputs) {
+  let Bots = createBots(userInputs); // create bots based on inputs
+  Render.startFight(Bots);           // draw inital stats
+  $("#attack").click( () => {        // on click update health
+
+    // Set new healths
+    Bots._1.health -= Bots._2.getDamage();
+    Bots._2.health -= Bots._1.getDamage();
+    Render.setHealth(Bots._1.health, Bots._2.health);
+    Render.setStatus(`Oh snap! ${Bots._1.name} dealth ${Bots._1.damage} damage and ${Bots._2.name} dealth ${Bots._2.damage} damage.`);
+
+    // Set new health for Bot 2
+    console.log("you clicked attack");
   });
-  Render.startFight(Bots);
 };
 
 function createBots (userInputs) {  // name1, name2, bot1, bot2
@@ -22,4 +29,4 @@ function createBots (userInputs) {  // name1, name2, bot1, bot2
   return {_1, _2};
 }
 
-module.exports = FightLogic;
+module.exports = fightLogic;

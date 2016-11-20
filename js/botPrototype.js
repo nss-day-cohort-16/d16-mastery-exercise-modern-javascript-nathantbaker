@@ -13,6 +13,8 @@ let Robot = {
   terrain: "unknown",
   healthRange: [15, 30], // base health range
   damageRange: [5, 10], //  base damage range
+  health: 0,
+  damage: 0,
   modHealth: 0,
   modDamage: 0,
 
@@ -24,13 +26,17 @@ let Robot = {
     let start = this.healthRange[0] += this.modHealth;   // Increase min/max heatlh
     let end   = this.healthRange[1] += this.modHealth;  //  by model's modifers
     // Return a random integer between new health range
-    return Math.ceil(Math.random()*(end-start+1))+(start-1);
+    let newHealth = Math.ceil(Math.random()*(end-start+1))+(start-1);
+    this.health = newHealth; // store current health
+    return newHealth;
   },
   getDamage() {
     let start = this.damageRange[0] += this.modDamage;   // Increase min/max damage
     let end   = this.damageRange[1] += this.modDamage;  //  by model's modifers
     // Return a random integer between new damage range
-    return Math.ceil(Math.random()*(end-start+1))+(start-1);
+    let newDamage = Math.ceil(Math.random()*(end-start+1))+(start-1);
+    this.damage = newDamage; // store current damage
+    return newDamage;
   }
 };
 

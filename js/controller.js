@@ -2,7 +2,7 @@
 
 // Requires
 require("../sass/style.scss");
-let beginFight = require("./model");
+let fightLogic = require("./model");
 
 // Object to collect user inputs
 let userInputs = {
@@ -56,7 +56,7 @@ $(document).keypress(function(e) {
  function validateForm() {
   let array = Object.values(userInputs);
     if (array[0] || array[1] || array[2] || array[3] !== null) {
-      beginFight(userInputs);
+      fightLogic(userInputs);
     } else {
       alert("Please set a name and bot type for both bots first.");
     }
