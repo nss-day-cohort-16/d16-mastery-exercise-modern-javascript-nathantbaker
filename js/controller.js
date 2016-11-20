@@ -2,7 +2,7 @@
 
 // Requires
 require("../sass/style.scss");
-require("./model");
+let FightLogic = require("./model");
 
 // Object to collect user inputs
 let userInputs = {
@@ -21,7 +21,8 @@ let inputs  = $("#inputs"),
     select2 = $("#select2"),
     fight   = $("#fight"),
     attack  = $("#attack"),
-    reset  = $("#reset");
+    battle  = $("#battle"),
+    reset   = $("#reset");
 
 
 name1.keyup( () => {
@@ -62,7 +63,8 @@ let beginFight = () => {
   fight.html("Attack").attr("id", "attack"); // give button new text and different id.
   inputs.toggleClass("hide"); // hide input fields
   reset.toggleClass("hide");  // add reset button to refresh page
-  console.log("toggle hide class");
+  battle.toggleClass("hide"); // show fight div
+  FightLogic(userInputs);
   // call fight logic from model
   // hide inputs
   // add small new fight button

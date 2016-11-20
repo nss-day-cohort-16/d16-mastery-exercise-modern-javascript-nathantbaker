@@ -48,7 +48,7 @@
 
 	// Requires
 	__webpack_require__(1);
-	__webpack_require__(5);
+	let FightLogic = __webpack_require__(5);
 
 	// Object to collect user inputs
 	let userInputs = {
@@ -67,7 +67,8 @@
 	    select2 = $("#select2"),
 	    fight   = $("#fight"),
 	    attack  = $("#attack"),
-	    reset  = $("#reset");
+	    battle  = $("#battle"),
+	    reset   = $("#reset");
 
 
 	name1.keyup( () => {
@@ -108,7 +109,8 @@
 	  fight.html("Attack").attr("id", "attack"); // give button new text and different id.
 	  inputs.toggleClass("hide"); // hide input fields
 	  reset.toggleClass("hide");  // add reset button to refresh page
-	  console.log("toggle hide class");
+	  battle.toggleClass("hide"); // show fight div
+	  FightLogic(userInputs);
 	  // call fight logic from model
 	  // hide inputs
 	  // add small new fight button
@@ -149,7 +151,7 @@
 	exports.push([module.id, "@import url(/node_modules/bootstrap/dist/css/bootstrap.min.css);", ""]);
 
 	// module
-	exports.push([module.id, "body {\n  background: #ccc; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.hide {\n  visibility: none; }\n", ""]);
+	exports.push([module.id, "body {\n  background: #ccc; }\n\n.container {\n  background-color: #f4f3ed;\n  border-radius: 0 0 10px 10px;\n  padding: 10px 20px 20px 20px;\n  border: #ccc 1px solid;\n  box-shadow: 1px 2px 5px #ccc; }\n\n.form-control {\n  margin: 10px 0; }\n\n.btn-danger {\n  width: 100%; }\n\n.btn-default {\n  margin: 10px 0; }\n\n.hide {\n  visibility: none; }\n\nh2 {\n  font-size: 1.5em; }\n", ""]);
 
 	// exports
 
@@ -469,14 +471,31 @@
 	'use strict';
 
 	// Requires
-	let Display = __webpack_require__(6),
+	let Render = __webpack_require__(6),
 	    BotName = __webpack_require__(107);
 	    // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
-	let health = BotName.SubBot.getHealth();
-	let damage = BotName.SubBot.getDamage();
-	let description = BotName.SubBot.getDescription();
-	Display(`A ${description} has a health of ${health} and deals ${damage} damage.`, 1);
+	let FightLogic = function (userInputs) {
+	  let newBots = createBots(userInputs);
+	  console.log({
+	    Bot1: newBots.Bot1,
+	    Bot2: newBots.Bot2
+	  });
+	  let label1 = newBots.Bot1.getDescription();
+	  let label2 = newBots.Bot2.getDescription();
+	  Render(`<h2>A ${label1}</h2>`, 1);
+	  Render(`<h2>A ${label2}</h2>`, 2);
+	};
+
+	function createBots (userInputs) {  // name1, name2, bot1, bot2
+	  let Bot1 = Object.create(BotName[userInputs.bot1]);
+	  Bot1.name = userInputs.name1;
+	  let Bot2 = Object.create(BotName[userInputs.bot2]);
+	  Bot2.name = userInputs.name2;
+	  return {Bot1, Bot2};
+	}
+
+	module.exports = FightLogic;
 
 /***/ },
 /* 6 */
@@ -487,14 +506,14 @@
 	// Requires
 	__webpack_require__(7);
 
-	let displayFunction = function (string, botNum) {
+	let renderFunction = function (string, botNum) {
 	  switch(botNum) {
-	    case 1: $("#bot1").html(string); break;
-	    case 2: $("#bot2").html(string); break;
+	    case 1: $("#bot1").prepend(string); break;
+	    case 2: $("#bot2").prepend(string); break;
 	  }
 	};
 
-	module.exports = displayFunction;
+	module.exports = renderFunction;
 
 /***/ },
 /* 7 */
@@ -12087,42 +12106,42 @@
 
 	// Bot Model 1
 	let SubBot = Object.create(Bot.WaterBot);
-	SubBot.modelId = 1;
+	SubBot.model = "SubBot";
 	SubBot.weapon = "torpedos";
 	SubBot.modHealth = 4;
 	SubBot.modDamage = 2;
 
 	// Bot Model 2
 	let BoatBot = Object.create(Bot.WaterBot);
-	BoatBot.modelId = 2;
+	BoatBot.model = "BoatBot";
 	BoatBot.weapon = "waterproof grenades";
 	BoatBot.modHealth = 6;
 	BoatBot.modDamage = 3;
 
 	// Bot Model 3
 	let SquirrelBot = Object.create(Bot.FlyingBot);
-	SquirrelBot.modelId = 3;
+	SquirrelBot.model = "SquirrelBot";
 	SquirrelBot.weapon = "nuts";
 	SquirrelBot.modHealth = 8;
 	SquirrelBot.modDamage = 4;
 
 	// Bot Model 4
 	let BigBirdBot = Object.create(Bot.FlyingBot);
-	BigBirdBot.modelId = 4;
+	BigBirdBot.model = "BigBirdBot";
 	BigBirdBot.weapon = "sonic waves";
 	BigBirdBot.modHealth = 12;
 	BigBirdBot.modDamage = 6;
 
 	// Bot Model 5
 	let TankBot = Object.create(Bot.GroundBot);
-	TankBot.modelId = 5;
+	TankBot.model = "TankBot";
 	TankBot.weapon = "mega bullets";
 	TankBot.modHealth = 10;
 	TankBot.modDamage = 5;
 
 	// Bot Model 6
 	let CarBot = Object.create(Bot.GroundBot);
-	CarBot.modelId = 6;
+	CarBot.model = "CarBot";
 	CarBot.weapon = "flames";
 	CarBot.modHealth = 2;
 	CarBot.modDamage = 1;
@@ -12142,7 +12161,7 @@
 	let Robot = {
 
 	  // Default Stats
-	  modelId: null,
+	  model: "Prototype",
 	  name: "Mr. Roboto",
 	  weapon: "robot fists",
 	  terrain: "unknown",
@@ -12153,7 +12172,7 @@
 
 	  // Methods
 	  getDescription() {
-	    return `${this.terrain} bot named ${this.name}`;
+	    return `${this.model} bot named ${this.name}`;
 	  },
 	  getHealth() {
 	    let start = this.healthRange[0] += this.modHealth;   // Increase min/max heatlh

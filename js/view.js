@@ -3,11 +3,11 @@
 // Requires
 require('jquery');
 
-let displayFunction = function (string, botNum) {
+let renderFunction = function (string, botNum) {
   switch(botNum) {
-    case 1: $("#bot1").html(string); break;
-    case 2: $("#bot2").html(string); break;
+    case 1: $("#bot1").prepend(string); break;
+    case 2: $("#bot2").prepend(string); break;
   }
 };
 
-module.exports = displayFunction;
+module.exports = renderFunction;

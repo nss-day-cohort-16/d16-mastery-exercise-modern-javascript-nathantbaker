@@ -7,7 +7,7 @@ require('jquery');
 let Robot = {
 
   // Default Stats
-  modelId: null,
+  model: "Prototype",
   name: "Mr. Roboto",
   weapon: "robot fists",
   terrain: "unknown",
@@ -18,7 +18,7 @@ let Robot = {
 
   // Methods
   getDescription() {
-    return `${this.terrain} bot named ${this.name}`;
+    return `${this.model} bot named ${this.name}`;
   },
   getHealth() {
     let start = this.healthRange[0] += this.modHealth;   // Increase min/max heatlh
