@@ -40,7 +40,7 @@ let Robot = {
   }
 };
 
-// Create 3 types of bots with unique terrain
+// Creates 3 types of bots with unique terrain
 let WaterBot  = Object.create(Robot); WaterBot.terrain  = "water";
 let FlyingBot = Object.create(Robot); FlyingBot.terrain = "flying";
 let GroundBot = Object.create(Robot); GroundBot.terrain = "ground";

@@ -59,7 +59,6 @@
 	};
 
 	// Event Listeners for Text Fields and Select Menus
-
 	let name1   = $("#name1"),
 	    name2   = $("#name2"),
 	    select1 = $("#select1"),
@@ -68,22 +67,18 @@
 
 	name1.keyup( () => {
 	  userInputs.name1 = name1.val();
-	  console.log("userInputs.name1:", userInputs.name1);
 	});
 
 	name2.keyup( () => {
 	  userInputs.name2 = name2.val();
-	  console.log("userInputs.name2:", userInputs.name2);
 	});
 
 	select1.change(function() {
 	  userInputs.bot1 = $(this).val();
-	  console.log("userInputs.bot1", userInputs.bot1);
 	});
 
 	select2.change(function() {
 	  userInputs.bot2 = $(this).val();
-	  console.log("userInputs.bot2", userInputs.bot2);
 	});
 
 	// Listen for button click
@@ -92,21 +87,21 @@
 	});
 
 	// Listen for enter key
-	$(document).keypress(function(e) {
+	$(document).keypress( e => {
 	    if(e.which == 13) {
 	      validateForm();
 	    }
 	});
 
 	// Form Validation
-	 function validateForm() {
+	 let validateForm = () => {
 	  let array = Object.values(userInputs);
-	    if (array[0] || array[1] || array[2] || array[3] !== null) {
-	      fightLogic(userInputs);
-	    } else {
+	    if (array[0] === null || array[1] === null || array[2] === null || array[3] === null) {
 	      alert("Please set a name and bot type for both bots first.");
+	    } else {
+	      fightLogic(userInputs);
 	    }
-	}
+	};
 
 /***/ },
 /* 1 */
@@ -465,11 +460,10 @@
 	// Requires
 	let Render = __webpack_require__(6),
 	    BotName = __webpack_require__(107);
-	    // {SubBot, BoatBot, SquirrelBot, BigBirdBot, TankBot, CarBot};
 
 	let attack = $("#attack");
 
-	let fightLogic = function (userInputs) {
+	let fightLogic = userInputs => {
 	  let Bots = createBots(userInputs); // create bots based on inputs
 	  Render.startFight(Bots);           // draw inital stats
 	  attack.click( () => {        // on click, update health
@@ -496,13 +490,13 @@
 	  });
 	};
 
-	function createBots (userInputs) {  // name1, name2, bot1, bot2
+	let createBots = userInputs => {  // name1, name2, bot1, bot2
 	  let _1 = Object.create(BotName[userInputs.bot1]);
 	  _1.name = userInputs.name1;
 	  let _2 = Object.create(BotName[userInputs.bot2]);
 	  _2.name = userInputs.name2;
 	  return {_1, _2};
-	}
+	};
 
 	module.exports = fightLogic;
 
@@ -526,12 +520,12 @@
 	    health2 = $("#bot2-health"),
 	    status = $("#status");
 
-	let startFight = function (Bots) {
-	  beginButton.toggleClass("hide"); // hide begin fight button
-	  attack.toggleClass("hide"); // show fight button
-	  inputs.toggleClass("hide"); // hide input fields
-	  reset.toggleClass("hide");  // add reset button to refresh page
-	  battle.toggleClass("hide"); // show fight div
+	let startFight = Bots => {
+	  beginButton.toggleClass("hide");   // hide begin fight button
+	  attack.toggleClass("hide");       //  show attack button
+	  inputs.toggleClass("hide");      //   hide input fields
+	  reset.toggleClass("hide");      //    add reset button so the use can refresh the page
+	  battle.toggleClass("hide");    //     show the fighting view
 
 	  // Get Random health based on bots' health ranges
 	  Bots._1.health = Bots._1.getHealth();
@@ -541,7 +535,7 @@
 	  $("#bot1-title").html(`<h2>A ${Bots._1.model} named ${Bots._1.name}<span class="pull-right">v.s.</span></h2>`);
 	  $("#bot2-title").html(`<h2>A ${Bots._2.model} named ${Bots._2.name}</h2>`);
 
-	  // Health
+	  // Display Health for each bot
 	  health1.html(`<h2 class="health">Health: ${Bots._1.health}</h2>`);
 	  health2.html(`<h2 class="health">Health: ${Bots._2.health}</h2>`);
 
@@ -572,13 +566,15 @@
 	    `);
 	};
 
-	let setHealth = function (newHealth1, newHealth2) {
+	// Function to set new healths
+	let setHealth = (newHealth1, newHealth2) => {
 	  health1.html(`<h2 class="health">Health: ${newHealth1}</h2>`);
 	  health2.html(`<h2 class="health">Health: ${newHealth2}</h2>`);
 	};
 
-	let setStatus = function (string) {
-	  status.html(`<h2 class="status">${string}</h2>`);
+	// Function to set new status of the fight
+	let setStatus = string => {
+	  status.html(`<h2>${string}</h2>`);
 	};
 
 	module.exports = {startFight, setHealth, setStatus};
@@ -12170,7 +12166,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	let Bot = __webpack_require__(108); // {WaterBot, FlyingBot, GroundBot}
+	let Bot = __webpack_require__(108);
 
 	// Bot Model 1
 	let SubBot = Object.create(Bot.WaterBot);
@@ -12262,7 +12258,7 @@
 	  }
 	};
 
-	// Create 3 types of bots with unique terrain
+	// Creates 3 types of bots with unique terrain
 	let WaterBot  = Object.create(Robot); WaterBot.terrain  = "water";
 	let FlyingBot = Object.create(Robot); FlyingBot.terrain = "flying";
 	let GroundBot = Object.create(Robot); GroundBot.terrain = "ground";

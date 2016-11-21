@@ -1,6 +1,6 @@
 ## Notes about Webpack
 
- Here are some notes about how this project uses Webpack.
+ Here are some notes about how to work on this project using Webpack.
 
 1. Run `npm install` to download dependencies.
 1. Run `webpack --watch` to compile the `dist/bundle.js` when something changes.

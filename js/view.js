@@ -14,12 +14,12 @@ let bot1El = $("#bot1"),
     health2 = $("#bot2-health"),
     status = $("#status");
 
-let startFight = function (Bots) {
-  beginButton.toggleClass("hide"); // hide begin fight button
-  attack.toggleClass("hide"); // show fight button
-  inputs.toggleClass("hide"); // hide input fields
-  reset.toggleClass("hide");  // add reset button to refresh page
-  battle.toggleClass("hide"); // show fight div
+let startFight = Bots => {
+  beginButton.toggleClass("hide");   // hide begin fight button
+  attack.toggleClass("hide");       //  show attack button
+  inputs.toggleClass("hide");      //   hide input fields
+  reset.toggleClass("hide");      //    add reset button so the use can refresh the page
+  battle.toggleClass("hide");    //     show the fighting view
 
   // Get Random health based on bots' health ranges
   Bots._1.health = Bots._1.getHealth();
@@ -29,7 +29,7 @@ let startFight = function (Bots) {
   $("#bot1-title").html(`<h2>A ${Bots._1.model} named ${Bots._1.name}<span class="pull-right">v.s.</span></h2>`);
   $("#bot2-title").html(`<h2>A ${Bots._2.model} named ${Bots._2.name}</h2>`);
 
-  // Health
+  // Display Health for each bot
   health1.html(`<h2 class="health">Health: ${Bots._1.health}</h2>`);
   health2.html(`<h2 class="health">Health: ${Bots._2.health}</h2>`);
 
@@ -60,13 +60,15 @@ let startFight = function (Bots) {
     `);
 };
 
-let setHealth = function (newHealth1, newHealth2) {
+// Function to set new healths
+let setHealth = (newHealth1, newHealth2) => {
   health1.html(`<h2 class="health">Health: ${newHealth1}</h2>`);
   health2.html(`<h2 class="health">Health: ${newHealth2}</h2>`);
 };
 
-let setStatus = function (string) {
-  status.html(`<h2 class="status">${string}</h2>`);
+// Function to set new status of the fight
+let setStatus = string => {
+  status.html(`<h2>${string}</h2>`);
 };
 
 module.exports = {startFight, setHealth, setStatus};

@@ -1,5 +1,5 @@
 'use strict';
-let Bot = require("./botPrototype"); // {WaterBot, FlyingBot, GroundBot}
+let Bot = require("./botPrototype");
 
 // Bot Model 1
 let SubBot = Object.create(Bot.WaterBot);
