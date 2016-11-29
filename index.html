@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <title>Robot Battledome</title>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="row text-center">
+        <div class="col-sm-12">
+          <h1>Robot Battledome</h1>
+        </div>
+      </div>
+
+      <div class="row" id="inputs">
+         <div class="col-sm-6">
+            <input type="text" class="form-control" id="name1" placeholder="Give Bot 1 a Name">
+            <select class="form-control" id="select1">
+              <option>Select a Model for Bot 1</option>
+              <option value="SubBot">SubBot</option>
+              <option value="BoatBot">BoatBot</option>
+              <option value="SquirrelBot">SquirrelBot</option>
+              <option value="BigBirdBot">BigBirdBot</option>
+              <option value="TankBot">TankBot</option>
+              <option value="CarBot">CarBot</option>
+            </select>
+         </div>
+         <div class="col-sm-6">
+            <input type="text" class="form-control" id="name2" placeholder="Give Bot 2 a Name">
+            <select class="form-control" id="select2">
+              <option>Select a Model for Bot 2</option>
+              <option value="SubBot">SubBot</option>
+              <option value="BoatBot">BoatBot</option>
+              <option value="SquirrelBot">SquirrelBot</option>
+              <option value="BigBirdBot">BigBirdBot</option>
+              <option value="TankBot">TankBot</option>
+              <option value="CarBot">CarBot</option>
+            </select>
+         </div>
+      </div>
+
+      <div class="row text-center">
+         <div class="col-sm-12">
+           <button type="button" class="btn btn-danger" id="beginButton">Begin Fight</button>
+           <button type="button" class="btn btn-danger hide" id="attack">Attack</button>
+         </div>
+      </div>
+
+      <div class="row">
+        <div class="text-center">
+          <div class="col-sm-12" id="status"></div>
+        </div>
+      </div>
+
+      <div class="row hide" id="battle">
+         <div class="col-sm-6" id="bot1">
+            <div class="row">
+              <div class="col-sm-12" id="bot1-title"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" id="bot1-health"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" id="bot1-stats"></div>
+            </div>
+         </div>
+         <div class="col-sm-6" id="bot2">
+            <div class="row">
+              <div class="col-sm-12" id="bot2-title"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" id="bot2-health"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12" id="bot2-stats"></div>
+            </div>
+         </div>
+      </div>
+
+    </div>
+
+     <div class="row text-center">
+         <div class="col-sm-12">
+          <a class="btn btn-default hide" href="." id="reset">New Fight</a>
+         </div>
+      </div>
+
+    <script type="text/javascript" src="dist/bundle.js" charset="utf-8"></script>
+  </body>
+</html>

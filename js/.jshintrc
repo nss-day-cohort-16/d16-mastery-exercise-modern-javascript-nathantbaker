@@ -1,0 +1,13 @@
+{
+  "strict": "global",
+  "esversion": 6,
+  "globals": {
+    "Display": true,
+    "Type": true,
+    "$": true,
+    "console": true,
+    "alert": true,
+    "document": true,
+    "alert": true
+  }
+}
